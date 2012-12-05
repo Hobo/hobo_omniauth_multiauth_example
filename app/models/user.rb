@@ -2,9 +2,11 @@ class User < ActiveRecord::Base
 
   hobo_user_model # Don't put anything above this
 
+  include HoboOmniauth::MultiAuth
+
   fields do
-    name          :string, :required, :unique
-    email_address :email_address, :login => true
+    name          :string, :required
+    email_address :email_address, :login => true, :validate => false
     administrator :boolean, :default => false
     timestamps
   end
@@ -32,6 +34,8 @@ class User < ActiveRecord::Base
       :become => :inactive, :new_key => true  do
       UserMailer.activation(self, lifecycle.key).deliver
     end
+
+    create :from_omniauth, :params => [:name, :email_address], :become => :active
 
     transition :activate, { :inactive => :active }, :available_to => :key_holder
 

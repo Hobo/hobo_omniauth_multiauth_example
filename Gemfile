@@ -37,20 +37,13 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 
-gem "hobo_support", :path => "/work/hobo32/hobo_support"
-gem "hobo_fields", :path => "/work/hobo32/hobo_fields"
-gem "dryml", :path => "/work/hobo32"
-gem "hobo", :path => "/work/hobo32"
-gem "hobo_rapid", :path => "/work/hobo32"
-gem "hobo_clean", :path => "/work/hobo32"
-gem "hobo_clean_admin", :path => "/work/hobo32"
-gem "hobo_jquery", :path => "/work/hobo32"
-gem "hobo_jquery_ui", :path => "/work/hobo32"
-# Hobo has a lot of assets.   Stop cluttering the log in development mode.
-
+gem "hobo", :git => "git://github.com/Hobo/hobo.git"
+gem "hobo_jquery_ui", :git => "git://github.com/Hobo/hobo.git"
 gem "quiet_assets", :group => :development
-# Hobo's version of will_paginate is required.
-
 gem "will_paginate", :git => "git://github.com/Hobo/will_paginate.git"
-gem "hobo_bootstrap", "2.0.0.pre7"
+gem "hobo_bootstrap", :git => "git://github.com/Hobo/hobo_bootstrap.git"
+gem "hobo_omniauth", :git => "git://github.com/Hobo/hobo_omniauth.git"
 gem "jquery-ui-themes", "~> 0.0.4"
+gem 'omniauth-github'
+gem 'omniauth-twitter'
+gem 'thin'

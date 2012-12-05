@@ -8,8 +8,70 @@
 
 <include gem='hobo_bootstrap'/>
 
+<include gem='hobo_omniauth'/>
+
 <include src="taglibs/auto/rapid/cards"/>
 <include src="taglibs/auto/rapid/pages"/>
 <include src="taglibs/auto/rapid/forms"/>
 
 <include src="application"/>
+
+<extend tag="login-page">
+  <old-login-page merge>
+    <content-body: replace>
+      <div class="well"><login class="btn" provider="twitter"/></div>
+      <div class="well"><login class="btn" provider="github"/></div>
+      <content-body restore/>
+    </content-body:>
+  </old-login-page>
+</extend>
+
+<extend tag="signup-page">
+  <old-signup-page merge>
+    <content-body: replace>
+      <div class="well">
+        <login class="btn" provider="twitter">Sign up via Twitter</login>
+      </div>
+      <div class="well">
+        <login class="btn" provider="github">Sign up via Github</login>
+      </div>
+      <div class="well">
+        <content-body restore/>
+      </div>
+    </content-body:>
+  </old-signup-page>
+</extend>
+
+
+<def tag="show-or-authorize" attrs="provider">
+  <do with="&this.authorizations.find_by_provider(provider)">
+    <if>
+      <a href="http://#{provider}.com"><avatar/> <%= this.nickname %> on <%= provider.titleize %></a>
+    </if>
+    <else>
+      <login class="btn" provider="&provider">Link to <%= provider.titleize %></login>
+    </else>
+  </do>
+</def>
+
+<extend tag="account-page">
+  <old-account-page merge>
+    <content-body: replace>
+      <div class="well">
+        <show-or-authorize provider="twitter"/>
+      </div>
+      <div class="well">
+        <show-or-authorize provider="github"/>
+      </div>
+      <div class="well">
+        <content-body restore/>
+      </div>
+    </content-body:>
+  </old-account-page>
+</extend>
+
+<extend tag="account-nav">
+  <old-account-nav merge>
+    <logged-in-as:><a to="&current_user"><avatar style="height: 20px;"/> <name/></a></logged-in-as:>
+  </old-account-nav>
+</extend>
